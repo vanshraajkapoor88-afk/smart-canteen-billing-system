@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Receipt #1003 - Smart Canteen</title>
+<style>
+body { font-family: 'Courier New', monospace; background:#f4f4f9; padding:20px; display:flex; justify-content:center; }
+.receipt { background:#fff; padding:24px; border:1px solid #ccc; width:340px; box-shadow:0 4px 10px rgba(0,0,0,0.1); border-radius:8px; }
+.center { text-align:center; }
+hr { border-top:1px dashed #666; margin:12px 0; }
+.row { display:flex; justify-content:space-between; margin:4px 0; font-size:13px; }
+.bold { font-weight:bold; }
+.btn { display:block; width:100%; margin-top:16px; padding:10px; background:#10b981; color:#fff; border:none; border-radius:4px; font-weight:bold; cursor:pointer; text-align:center; text-decoration:none; }
+@media print { .btn { display:none; } body { background:#fff; padding:0; } }
+</style>
+</head>
+<body>
+<div class="receipt">
+  <div class="center bold" style="font-size:16px;">CAMPUS SMART CANTEEN</div>
+  <div class="center" style="font-size:12px;">Tax Invoice / E-Receipt</div>
+  <hr>
+  <div class="row"><span>Bill No:</span><span class="bold">#1003</span></div>
+  <div class="row"><span>Date/Time:</span><span>2026-10-29 20:10</span></div>
+  <div class="row"><span>Customer:</span><span>2026CSE108</span></div>
+  <div class="row"><span>Payment:</span><span>CASH</span></div>
+  <hr>
+  <div class="row"><span>Crispy Veg Samosa (x2)</span><span>&#8377;30.00</span></div>
+  <div class="row"><span>Hot Masala Chai (x1)</span><span>&#8377;15.00</span></div>
+  <hr>
+  <div class="row"><span>Subtotal:</span><span>&#8377;45.00</span></div>
+  <div class="row" style="color:#059669;"><span>Discount:</span><span>-&#8377;10.00</span></div>
+  <div class="row"><span>GST (5%):</span><span>&#8377;1.75</span></div>
+  <hr>
+  <div class="row bold" style="font-size:15px;"><span>GRAND TOTAL:</span><span>&#8377;36.75</span></div>
+  <hr>
+  <div class="center" style="font-size:11px;">Thank you! Visit again.<br>E-Receipt powered by C Billing Engine</div>
+  <button class="btn" onclick="window.print()">Print Receipt</button>
+</div>
+</body>
+</html>

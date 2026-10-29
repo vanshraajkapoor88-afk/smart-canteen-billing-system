@@ -1,0 +1,19 @@
+# Binaries and compiled outputs
+*.exe
+*.o
+*.obj
+*.out
+
+# Archives
+*.zip
+*.tar.gz
+
+# Test / Scratch files
+simulate.exe
+simulate_order.c
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

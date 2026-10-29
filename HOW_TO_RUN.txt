@@ -1,0 +1,33 @@
+========================================================================
+             SMART CANTEEN POS & BILLING SYSTEM - QUICK START
+========================================================================
+
+HOW TO RUN:
+-----------
+Method 1 (Easiest):
+  -> Double-click the "Smart Canteen POS" shortcut on your Desktop!
+
+Method 2:
+  -> Double-click "RUN.bat" in this folder.
+     (It will automatically compile if needed and launch the terminal).
+
+Method 3:
+  -> To view the Web Dashboard directly in your browser, double-click
+     "VIEW_WEB_DASHBOARD.bat" or open "dashboard.html".
+
+LOGIN CREDENTIALS:
+------------------
+  Admin Password : admin123
+  Sample Students: 2026CSE001 (Aarav), 2026CSE042 (Sneha), 2026CSE108 (Rohan)
+  Guest Ordering : Type "GUEST"
+
+FEATURES INCLUDED:
+------------------
+  1. Full ANSI Colored Terminal Front-End
+  2. Dynamic Memory Cart (malloc/realloc/free)
+  3. Binary File CRUD Storage (menu.dat, sales.dat, students.dat)
+  4. Real-time Stock Shielding & Sold-Out Alerts
+  5. Student Loyalty Cashback System (5% cashback on student ID)
+  6. Smart Combo Offer Engine (Rs. 10 discount on snack + drink)
+  7. Automated HTML5 Web POS Dashboard & Printable E-Receipts
+========================================================================
