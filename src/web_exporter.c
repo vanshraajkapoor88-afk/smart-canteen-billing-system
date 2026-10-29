@@ -167,9 +167,10 @@ void export_and_launch_web_dashboard() {
     fprintf(fp, "    <h2><span>Live Food Inventory & Stock Status</span></h2>\n");
     fprintf(fp, "    <table>\n");
     fprintf(fp, "      <thead>\n");
-    fprintf(fp, "        <tr><th>Item ID</th><th>Item Name</th><th>Category</th><th>Price (INR)</th><th>Stock Remaining</th><th>Status</th></tr>\n");
+    fprintf(fp, "        <tr><th style=\"width:70px;\">S.No</th><th>Item Name</th><th>Category</th><th>Price (INR)</th><th>Stock Remaining</th><th>Status</th></tr>\n");
     fprintf(fp, "      </thead>\n      <tbody>\n");
 
+    int sno = 1;
     for (int i = 0; i < item_count; i++) {
         if (!items[i].is_active) continue;
         const char *badge_class = "badge-in";
@@ -184,7 +185,7 @@ void export_and_launch_web_dashboard() {
         }
 
         fprintf(fp, "        <tr>\n");
-        fprintf(fp, "          <td><strong>#%d</strong></td>\n", items[i].id);
+        fprintf(fp, "          <td><strong style=\"color:#38bdf8;\">%d</strong></td>\n", sno++);
         fprintf(fp, "          <td><strong>%s</strong></td>\n", items[i].name);
         fprintf(fp, "          <td>%s</td>\n", get_category_name(items[i].category));
         fprintf(fp, "          <td>&#8377;%.2f</td>\n", items[i].price);

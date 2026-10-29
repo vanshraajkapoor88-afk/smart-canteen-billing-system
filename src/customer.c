@@ -207,16 +207,35 @@ void run_customer_portal() {
                 int count = get_all_items(items, 100);
                 print_menu_table(items, count, 0);
 
-                int item_id, qty;
-                printf("\nEnter Item ID to order: ");
-                if (scanf("%d", &item_id) != 1) {
+                // Collect active items to map S.No (1 to n)
+                Item active_items[100];
+                int active_count = 0;
+                for (int i = 0; i < count; i++) {
+                    if (items[i].is_active) {
+                        active_items[active_count++] = items[i];
+                    }
+                }
+
+                int user_input, qty;
+                printf("\nEnter Item S.No to order (1-%d): ", active_count);
+                if (scanf("%d", &user_input) != 1) {
                     while (getchar() != '\n');
                     break;
                 }
 
                 Item selected;
-                if (!find_item_by_id(item_id, &selected)) {
-                    printf("%sItem ID %d not found or inactive!%s\n", COLOR_RED, item_id, COLOR_RESET);
+                int found = 0;
+                // Allow matching by Serial Number (1 to active_count)
+                if (user_input >= 1 && user_input <= active_count) {
+                    selected = active_items[user_input - 1];
+                    found = 1;
+                } else {
+                    // Fallback to match by raw Item ID (e.g., 101)
+                    found = find_item_by_id(user_input, &selected);
+                }
+
+                if (!found) {
+                    printf("%sItem #%d not found! Please choose a number from 1 to %d.%s\n", COLOR_RED, user_input, active_count, COLOR_RESET);
                     break;
                 }
 
@@ -243,13 +262,18 @@ void run_customer_portal() {
                     break;
                 }
                 view_cart(cart);
-                int rem_id;
-                printf("Enter Item ID to remove from cart: ");
-                if (scanf("%d", &rem_id) == 1) {
-                    if (remove_from_cart(cart, rem_id)) {
+                int rem_num;
+                printf("Enter Item S.No to remove (1-%d): ", cart->count);
+                if (scanf("%d", &rem_num) == 1) {
+                    if (rem_num >= 1 && rem_num <= cart->count) {
+                        int target_id = cart->items[rem_num - 1].item_id;
+                        if (remove_from_cart(cart, target_id)) {
+                            printf("%s[Success] Item removed from cart.%s\n", COLOR_GREEN, COLOR_RESET);
+                        }
+                    } else if (remove_from_cart(cart, rem_num)) {
                         printf("%s[Success] Item removed from cart.%s\n", COLOR_GREEN, COLOR_RESET);
                     } else {
-                        printf("%sItem ID not found in cart.%s\n", COLOR_RED, COLOR_RESET);
+                        printf("%sInvalid item selection.%s\n", COLOR_RED, COLOR_RESET);
                     }
                 }
                 break;

@@ -16,9 +16,14 @@ void clear_screen() {
 }
 
 void pause_screen() {
-    printf("\n%sPress [Enter] to continue...%s", COLOR_GRAY, COLOR_RESET);
-    while (getchar() != '\n');
-    getchar();
+    printf("\n%sPress [Enter] or any key to continue...%s", COLOR_GRAY, COLOR_RESET);
+#ifdef _WIN32
+    _getch();
+#else
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+#endif
+    printf("\n");
 }
 
 void print_banner() {
@@ -58,10 +63,11 @@ static const char* cat_to_str(int cat) {
 }
 
 void print_menu_table(Item *items, int count, int admin_view) {
-    printf("%s+-----+-------------------------------+-------------+---------+---------+--------------+%s\n", COLOR_CYAN, COLOR_RESET);
-    printf("%s| ID  | Food Item Name                | Category    | Price   | Stock   | Status       |%s\n", COLOR_CYAN, COLOR_RESET);
-    printf("%s+-----+-------------------------------+-------------+---------+---------+--------------+%s\n", COLOR_CYAN, COLOR_RESET);
+    printf("%s+------+-------------------------------+-------------+---------+---------+--------------+%s\n", COLOR_CYAN, COLOR_RESET);
+    printf("%s| S.No | Food Item Name                | Category    | Price   | Stock   | Status       |%s\n", COLOR_CYAN, COLOR_RESET);
+    printf("%s+------+-------------------------------+-------------+---------+---------+--------------+%s\n", COLOR_CYAN, COLOR_RESET);
 
+    int sno = 1;
     for (int i = 0; i < count; i++) {
         if (!items[i].is_active && !admin_view) continue;
 
@@ -82,8 +88,8 @@ void print_menu_table(Item *items, int count, int admin_view) {
             strcpy(color, COLOR_GREEN);
         }
 
-        printf("| %-3d | %-29s | %-11s | Rs.%-5.2f | %-7d | %s%-12s%s |\n",
-               items[i].id,
+        printf("| %-4d | %-29s | %-11s | Rs.%-5.2f | %-7d | %s%-12s%s |\n",
+               sno++,
                items[i].name,
                cat_to_str(items[i].category),
                items[i].price,
@@ -92,7 +98,7 @@ void print_menu_table(Item *items, int count, int admin_view) {
                status_str,
                COLOR_RESET);
     }
-    printf("%s+-----+-------------------------------+-------------+---------+---------+--------------+%s\n", COLOR_CYAN, COLOR_RESET);
+    printf("%s+------+-------------------------------+-------------+---------+---------+--------------+%s\n", COLOR_CYAN, COLOR_RESET);
 }
 
 void print_receipt_terminal(Order order) {

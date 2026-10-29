@@ -24,3 +24,6 @@ if not exist "canteen.exe" (
 :: 2. Launch the billing system
 cls
 canteen.exe
+echo.
+echo Application closed.
+pause

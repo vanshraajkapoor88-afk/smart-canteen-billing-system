@@ -98,13 +98,21 @@ void run_admin_portal() {
                 int count = get_all_items(items, 100);
                 print_menu_table(items, count, 1);
 
-                int id;
-                printf("\nEnter Item ID to update: ");
-                if (scanf("%d", &id) != 1) break;
+                int input_num;
+                printf("\nEnter Item S.No to update (1-%d): ", count);
+                if (scanf("%d", &input_num) != 1) break;
 
                 Item itm;
-                if (!find_item_by_id(id, &itm)) {
-                    printf("%sItem ID %d not found!%s\n", COLOR_RED, id, COLOR_RESET);
+                int found = 0;
+                if (input_num >= 1 && input_num <= count) {
+                    itm = items[input_num - 1];
+                    found = 1;
+                } else {
+                    found = find_item_by_id(input_num, &itm);
+                }
+
+                if (!found) {
+                    printf("%sItem not found!%s\n", COLOR_RED, COLOR_RESET);
                     pause_screen();
                     break;
                 }
@@ -124,7 +132,7 @@ void run_admin_portal() {
                 if (ns >= 0) itm.stock = ns;
 
                 if (update_item(itm)) {
-                    printf("%s[Success] Item ID %d updated successfully!%s\n", COLOR_GREEN, id, COLOR_RESET);
+                    printf("%s[Success] Item '%s' updated successfully!%s\n", COLOR_GREEN, itm.name, COLOR_RESET);
                 } else {
                     printf("%s[Error] Failed to update item!%s\n", COLOR_RED, COLOR_RESET);
                 }
@@ -138,18 +146,33 @@ void run_admin_portal() {
                 int count = get_all_items(items, 100);
                 print_menu_table(items, count, 1);
 
-                int id;
-                printf("\nEnter Item ID to delete: ");
-                if (scanf("%d", &id) != 1) break;
+                int input_num;
+                printf("\nEnter Item S.No to delete (1-%d): ", count);
+                if (scanf("%d", &input_num) != 1) break;
 
-                printf("Are you sure you want to delete item #%d? (1 for Yes, 0 for No): ", id);
+                Item itm;
+                int found = 0;
+                if (input_num >= 1 && input_num <= count) {
+                    itm = items[input_num - 1];
+                    found = 1;
+                } else {
+                    found = find_item_by_id(input_num, &itm);
+                }
+
+                if (!found) {
+                    printf("%sItem not found!%s\n", COLOR_RED, COLOR_RESET);
+                    pause_screen();
+                    break;
+                }
+
+                printf("Are you sure you want to delete '%s'? (1 for Yes, 0 for No): ", itm.name);
                 int confirm;
                 scanf("%d", &confirm);
                 if (confirm == 1) {
-                    if (delete_item(id)) {
-                        printf("%s[Success] Item ID %d soft-deleted (historical bills remain intact).%s\n", COLOR_GREEN, id, COLOR_RESET);
+                    if (delete_item(itm.id)) {
+                        printf("%s[Success] Item '%s' soft-deleted (historical bills remain intact).%s\n", COLOR_GREEN, itm.name, COLOR_RESET);
                     } else {
-                        printf("%s[Error] Item not found or failed to delete.%s\n", COLOR_RED, COLOR_RESET);
+                        printf("%s[Error] Failed to delete item.%s\n", COLOR_RED, COLOR_RESET);
                     }
                 }
                 pause_screen();

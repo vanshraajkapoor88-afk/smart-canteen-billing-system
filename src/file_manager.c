@@ -2,11 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#ifdef _WIN32
+#include <direct.h>
+#else
+#include <sys/stat.h>
+#endif
 #include "../include/file_manager.h"
 #include "../include/colors.h"
 
 // Seeds initial default menu, student accounts, and sample orders if files do not exist
 void init_default_data() {
+#ifdef _WIN32
+    _mkdir("data");
+#else
+    mkdir("data", 0755);
+#endif
     FILE *fp = fopen(MENU_FILE, "rb");
     if (!fp) {
         fp = fopen(MENU_FILE, "wb");
